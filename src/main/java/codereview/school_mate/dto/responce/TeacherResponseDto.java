@@ -1,6 +1,5 @@
-package codereview.school_mate.dto;
+package codereview.school_mate.dto.responce;
 
-import codereview.school_mate.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

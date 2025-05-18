@@ -1,14 +1,18 @@
 package codereview.school_mate.controller;
 
-import codereview.school_mate.dto.SubjectRequestDto;
-import codereview.school_mate.dto.SubjectResponseDto;
+import codereview.school_mate.config.JwtRequestFilter;
+import codereview.school_mate.dto.request.SubjectRequestDto;
+import codereview.school_mate.dto.responce.SubjectResponseDto;
 import codereview.school_mate.service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -27,13 +31,20 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.hasSize;
 
-@WebMvcTest(SubjectController.class)
+@WebMvcTest(
+        value = SubjectController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = JwtRequestFilter.class
+        )
+)
+@AutoConfigureMockMvc(addFilters = false)
 class SubjectControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private SubjectService subjectService;
 
     @Autowired

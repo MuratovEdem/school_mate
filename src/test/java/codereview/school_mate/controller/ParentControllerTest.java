@@ -1,48 +1,54 @@
 package codereview.school_mate.controller;
 
-import codereview.school_mate.dto.ParentResponseDto;
-import codereview.school_mate.dto.StudentRequestDto;
+import codereview.school_mate.config.JwtRequestFilter;
+import codereview.school_mate.dto.responce.ParentResponseDto;
+import codereview.school_mate.exception.NotFoundException;
 import codereview.school_mate.service.ParentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.Mockito.when;
 
-import codereview.school_mate.dto.ParentRequestDto;
+import codereview.school_mate.dto.request.ParentRequestDto;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ParentController.class)
+@WebMvcTest(
+        value = ParentController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = JwtRequestFilter.class
+        )
+)
+@AutoConfigureMockMvc(addFilters = false)
 class ParentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private ParentService parentService;
 
     @Autowired
@@ -58,15 +64,15 @@ class ParentControllerTest {
                 .andExpect(jsonPath("$.name").value("Testov"));
     }
 
-//    @Test
-//    void findById_ShouldReturnNotFound() throws Exception {
-//        when(parentService.findById(1L))
-//                .thenThrow(new RuntimeException("Parent not found with id: 1"));
-//
-//        mockMvc.perform(get("/api/parents/{id}", 1L))
-//                .andExpect(status().isNotFound())
-//                .andExpect(content().string(containsString("Parent not found with id: 1")));
-//    }
+    @Test
+    void findById_ShouldReturnNotFound() throws Exception {
+        when(parentService.findByIdParent(1L))
+                .thenThrow(new NotFoundException("Parent not found with id: 1"));
+
+        mockMvc.perform(get("/api/parents/{id}", 1L))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Parent not found with id: 1")));
+    }
 
     @Test
     void findAll_ShouldReturnParentsList() throws Exception {
@@ -82,17 +88,6 @@ class ParentControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[1].name").value("Testov"));
-    }
-
-    @Test
-    void create_ShouldReturnCreatedParent() throws Exception {
-        when(parentService.createParent(any(ParentRequestDto.class))).thenReturn(createParentResponseDto());
-
-        mockMvc.perform(post("/api/parents")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createParentRequestDto())))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test

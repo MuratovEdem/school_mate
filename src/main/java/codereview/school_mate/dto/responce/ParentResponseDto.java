@@ -1,5 +1,5 @@
-package codereview.school_mate.dto;
-import codereview.school_mate.model.Student;
+package codereview.school_mate.dto.responce;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +16,5 @@ public class ParentResponseDto {
     private String surname;
     private String patronymic;
     private String contacts;
-    private List<Student> children= new ArrayList<>();
+    private List<StudentResponseDto> children= new ArrayList<>();
 }

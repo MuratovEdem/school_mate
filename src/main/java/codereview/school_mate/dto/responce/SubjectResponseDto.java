@@ -1,4 +1,4 @@
-package codereview.school_mate.dto;
+package codereview.school_mate.dto.responce;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
