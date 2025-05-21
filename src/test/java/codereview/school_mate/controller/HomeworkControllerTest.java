@@ -1,17 +1,20 @@
 package codereview.school_mate.controller;
 
-import codereview.school_mate.dto.HomeworkRequestDto;
-import codereview.school_mate.dto.HomeworkResponseDto;
+import codereview.school_mate.config.JwtRequestFilter;
+import codereview.school_mate.dto.request.HomeworkRequestDto;
+import codereview.school_mate.dto.responce.HomeworkResponseDto;
 import codereview.school_mate.exception.NotFoundException;
 import codereview.school_mate.service.HomeworkService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,9 +33,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.times;
 import static org.hamcrest.Matchers.hasSize;
 
-
-
-@WebMvcTest(HomeworkController.class)
+@WebMvcTest(
+        value = HomeworkController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = JwtRequestFilter.class
+        )
+)
+@AutoConfigureMockMvc(addFilters = false)
 class HomeworkControllerTest {
 
     @Autowired
@@ -40,7 +48,7 @@ class HomeworkControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private HomeworkService homeworkService;
 
     private final LocalDateTime testDate = LocalDateTime.now();

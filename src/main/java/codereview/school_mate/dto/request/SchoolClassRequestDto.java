@@ -1,6 +1,6 @@
-package codereview.school_mate.dto;
+package codereview.school_mate.dto.request;
 
-import codereview.school_mate.model.Teacher;
+import codereview.school_mate.dto.responce.TeacherResponseDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package codereview.school_mate.serviceImpl;
 
-import codereview.school_mate.config.JwtRequestFilter;
 import codereview.school_mate.dto.request.registration.ParentRegistrationRequestDto;
 import codereview.school_mate.dto.request.registration.RegistrationRequestDto;
 import codereview.school_mate.dto.responce.ParentResponseDto;
@@ -21,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;

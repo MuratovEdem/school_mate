@@ -53,7 +53,7 @@ class StudentControllerTest {
     @Test
     void findById_ShouldReturnStudent() throws Exception {
         StudentResponseDto responseDto = new StudentResponseDto(
-                1L, "Maria", "Petrova", "Sergeevna"
+                1L, "Maria", "Petrova", "Sergeevna", null, null
         );
 
         when(studentService.findByIdStudent(1L)).thenReturn(responseDto);
@@ -66,8 +66,8 @@ class StudentControllerTest {
     @Test
     void findAll_ShouldReturnStudentsList() throws Exception {
         List<StudentResponseDto> students = List.of(
-                new StudentResponseDto(1L, "Ivan", "Ivanov", "Ivanovich"),
-                new StudentResponseDto(2L, "Maria", "Petrova", "Sergeevna")
+                new StudentResponseDto(1L, "Ivan", "Ivanov", "Ivanovich", null, null),
+                new StudentResponseDto(2L, "Maria", "Petrova", "Sergeevna", null, null)
         );
 
         when(studentService.findAllStudent()).thenReturn(students);
@@ -81,7 +81,7 @@ class StudentControllerTest {
     @Test
     void update_ShouldReturnUpdatedStudent() throws Exception {
         StudentResponseDto responseDto = new StudentResponseDto(
-                1L, "Updated", "Name", "Patronymic"
+                1L, "Updated", "Name", "Patronymic", null, null
         );
 
         when(studentService.updateStudent(eq(1L), any(StudentRequestDto.class))).thenReturn(responseDto);
