@@ -1,6 +1,5 @@
 package codereview.school_mate.dto.responce;
 
-import codereview.school_mate.model.SchoolClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +12,6 @@ public class StudentResponseDto {
     private String name;
     private String surname;
     private String patronymic;
-//    private SchoolClass schoolClass;
+    private SchoolClassResponseDto schoolClass;
+    private ParentResponseDto parent;
 }

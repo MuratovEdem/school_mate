@@ -50,22 +50,6 @@ class StudentControllerTest {
     @MockitoBean
     private StudentService studentService;
 
-
-//    @Test
-//    void create_ShouldReturnCreatedStudent() throws Exception {
-//        StudentResponseDto responseDto = new StudentResponseDto();
-//
-//        when(studentService.createStudent(any(StudentRegistrationRequestDto.class), any(User.class))).thenReturn(responseDto);
-//
-//        mockMvc.perform(post("/api/students")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(
-//                                new StudentResponseDto()
-//                        )))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.name").value("Ivan"));
-//    }
-
     @Test
     void findById_ShouldReturnStudent() throws Exception {
         StudentResponseDto responseDto = new StudentResponseDto(

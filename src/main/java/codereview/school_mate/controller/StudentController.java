@@ -3,6 +3,7 @@ package codereview.school_mate.controller;
 import codereview.school_mate.dto.request.StudentRequestDto;
 import codereview.school_mate.dto.responce.StudentResponseDto;
 import codereview.school_mate.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +54,7 @@ public class StudentController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<StudentResponseDto> updateStudent(
-            @Parameter(description = "ID ученика", required = true) @PathVariable Long id,
+            @Parameter(description = "ID ученика", required = true)@Valid @PathVariable Long id,
             @RequestBody StudentRequestDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.updateStudent(id, dto));
     }

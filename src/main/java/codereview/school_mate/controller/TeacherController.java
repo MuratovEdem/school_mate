@@ -3,6 +3,7 @@ package codereview.school_mate.controller;
 import codereview.school_mate.dto.request.TeacherRequestDto;
 import codereview.school_mate.dto.responce.TeacherResponseDto;
 import codereview.school_mate.service.TeacherService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -53,7 +54,7 @@ public class TeacherController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<TeacherResponseDto> updateTeacher(
-            @Parameter(description = "ID учителя", required = true) @PathVariable Long id,
+            @Parameter(description = "ID учителя", required = true)@Valid @PathVariable Long id,
             @RequestBody TeacherRequestDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(teacherService.updateTeacher(id, dto));
     }

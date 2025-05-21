@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +54,7 @@ public class ParentController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<ParentResponseDto> updateParent(
-            @Parameter(description = "ID родителя", required = true) @PathVariable Long id,
+            @Parameter(description = "ID родителя", required = true)@Valid @PathVariable Long id,
             @RequestBody ParentRequestDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(parentService.updateParent(id, dto));
     }
